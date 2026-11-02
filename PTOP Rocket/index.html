@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PTOP Rocket</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main id="game-container">
+    <section id="hud" aria-label="Informations de jeu">
+      <div class="hud-item">
+        Temps :
+        <span id="timer">10</span>s
+      </div>
+
+      <div class="hud-item">
+        Boosts :
+        <span id="score">0</span>
+      </div>
+    </section>
+
+    <section id="game" aria-label="Zone de jeu">
+      <div id="world">
+        <div id="cloud-layer"></div>
+        <div id="space-layer"></div>
+      </div>
+
+      <div id="rocket-zone">
+        <div id="rocket">
+          <img
+            id="rocket-sprite"
+            src="images/ptop-rocket.png"
+            alt="Fusée PTOP"
+          />
+          <div id="flame"></div>
+        </div>
+      </div>
+
+      <div id="launch-pad">
+        <div id="launcher"></div>
+        <div id="earth"></div>
+      </div>
+    </section>
+
+    <p id="message">
+      Appuie rapidement sur ESPACE pour lancer la fusée !
+    </p>
+
+    <section id="game-over" aria-label="Fin de partie">
+      <h2>Mission terminée</h2>
+      <div id="final-score"></div>
+      <div id="final-rank"></div>
+      <button id="restart-btn" type="button">
+        Rejouer
+      </button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
