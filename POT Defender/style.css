@@ -1,0 +1,554 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --nes-black: #000000;
+  --nes-white: #ffffff;
+  --nes-gray: #7c7c7c;
+  --nes-light-gray: #bcbcbc;
+  --nes-blue: #0000fc;
+  --nes-blue-light: #0078f8;
+  --nes-cyan: #3cbcfc;
+  --nes-green: #00b800;
+  --nes-green-light: #80d010;
+  --nes-yellow: #f8b800;
+  --nes-orange: #f87800;
+  --nes-orange-dark: #e45c10;
+  --nes-red: #d82800;
+  --nes-red-dark: #a80020;
+  --nes-purple: #940084;
+  --nes-pink: #f8a4c0;
+
+  --screen-width: min(92vw, 760px);
+  --screen-height: min(76vh, 720px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, #1d2951 0%, #111827 45%, #05070d 100%);
+  color: var(--nes-white);
+  font-family: "Courier New", Courier, monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* =========================================
+   ARCADE FRAME
+========================================= */
+
+#arcade-frame {
+  width: var(--screen-width);
+  padding: 18px;
+  border: 6px solid var(--nes-cyan);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, #121212, #242424);
+  box-shadow:
+    0 0 0 6px #050505,
+    0 0 30px rgba(60, 188, 252, 0.35),
+    inset 0 0 25px rgba(255, 255, 255, 0.08);
+}
+
+#game-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header-title {
+  padding: 8px 16px;
+  color: var(--nes-yellow);
+  font-size: clamp(18px, 3vw, 30px);
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0 var(--nes-red-dark);
+  white-space: nowrap;
+}
+
+.header-block {
+  padding: 8px;
+  border: 3px solid var(--nes-white);
+  background: var(--nes-black);
+  color: var(--nes-green-light);
+  font-size: clamp(14px, 2vw, 22px);
+  font-weight: bold;
+  text-align: center;
+}
+
+.header-block .label {
+  display: block;
+  color: var(--nes-cyan);
+  font-size: 0.65em;
+}
+
+/* =========================================
+   POT BAR
+========================================= */
+
+#pot-bar-wrapper {
+  margin-bottom: 8px;
+  padding: 5px;
+  border: 3px solid var(--nes-white);
+  background: var(--nes-black);
+}
+
+#pot-bar {
+  width: 100%;
+  height: 24px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #151515 0 10px,
+      #202020 10px 20px
+    );
+  overflow: hidden;
+  position: relative;
+}
+
+#pot-fill {
+  width: 100%;
+  height: 100%;
+  background: var(--nes-green-light);
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+#stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--nes-white);
+  font-size: clamp(12px, 2vw, 16px);
+}
+
+#stats div {
+  flex: 1;
+  padding: 5px;
+  border: 2px solid var(--nes-gray);
+  background: var(--nes-black);
+  text-align: center;
+}
+
+/* =========================================
+   GAME SCREEN
+========================================= */
+
+#game-screen {
+  position: relative;
+  width: 100%;
+  height: var(--screen-height);
+  min-height: 460px;
+  max-height: 720px;
+  overflow: hidden;
+  border: 5px solid var(--nes-light-gray);
+  background:
+    linear-gradient(to bottom, #07163d 0%, #0b2f62 45%, #102044 100%);
+  box-shadow:
+    inset 0 0 40px rgba(0, 0, 0, 0.65),
+    0 0 0 4px var(--nes-black);
+  image-rendering: pixelated;
+}
+
+/* CRT scanline effect */
+#crt-overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 900;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.035) 0,
+      rgba(255, 255, 255, 0.035) 2px,
+      rgba(0, 0, 0, 0.07) 2px,
+      rgba(0, 0, 0, 0.07) 4px
+    );
+  mix-blend-mode: screen;
+}
+
+/* =========================================
+   LAYERS
+========================================= */
+
+#invoices-layer,
+#cash-layer,
+#effects-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#invoices-layer {
+  z-index: 20;
+}
+
+#cash-layer {
+  z-index: 30;
+}
+
+#effects-layer {
+  z-index: 40;
+}
+
+/* =========================================
+   PLAYER
+========================================= */
+
+#player {
+  position: absolute;
+  z-index: 50;
+  width: 72px;
+  height: 72px;
+  left: 0;
+  bottom: 18px;
+
+  /*
+    Critical fix:
+    No translateX(-50%) here.
+    The JS already calculates the exact left position in pixels.
+    Keeping translateX(-50%) causes the sprite to jump during shooting.
+  */
+  transform: none;
+
+  transition: filter 0.08s ease;
+  will-change: left, filter;
+}
+
+#player img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  display: block;
+  transform-origin: center center;
+}
+
+/*
+  Critical fix:
+  The shooting class must not animate #player itself horizontally.
+  The player container position remains stable.
+  Only the image inside the player gets a small vertical/pulse effect.
+*/
+#player.shooting {
+  filter: drop-shadow(0 0 8px var(--nes-yellow));
+}
+
+#player.shooting img {
+  animation: player-shoot 0.12s steps(2, end);
+}
+
+@keyframes player-shoot {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(5px) scale(1.05);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================
+   CASH PROJECTILES
+========================================= */
+
+.cash {
+  position: absolute;
+  width: 28px;
+  height: 36px;
+  z-index: 30;
+}
+
+.cash img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  display: block;
+}
+
+/* =========================================
+   INVOICES
+========================================= */
+
+.invoice {
+  position: absolute;
+  width: 56px;
+  height: 70px;
+  z-index: 20;
+}
+
+.invoice img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  display: block;
+}
+
+.invoice.warning {
+  animation: invoice-warning 0.18s steps(2, end) infinite;
+}
+
+@keyframes invoice-warning {
+  0% {
+    filter: none;
+  }
+
+  100% {
+    filter:
+      drop-shadow(0 0 8px var(--nes-red))
+      brightness(1.6);
+  }
+}
+
+/* =========================================
+   DUE DATE LINE
+========================================= */
+
+#due-date-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 112px;
+  z-index: 10;
+  border-top: 4px dashed var(--nes-red);
+  text-align: center;
+  color: var(--nes-yellow);
+  text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 2px 2px 0 var(--nes-red-dark);
+}
+
+#due-date-line span {
+  position: relative;
+  top: -16px;
+  padding: 2px 10px;
+  border: 2px solid var(--nes-red);
+  background: var(--nes-black);
+}
+
+/* =========================================
+   EFFECTS
+========================================= */
+
+.effect {
+  position: absolute;
+  z-index: 40;
+  font-weight: bold;
+  pointer-events: none;
+  animation: effect-pop 0.55s steps(4, end) forwards;
+  text-shadow: 2px 2px 0 var(--nes-black);
+}
+
+.effect.ok {
+  color: var(--nes-green-light);
+  font-size: 24px;
+}
+
+.effect.late {
+  color: var(--nes-red);
+  font-size: 18px;
+}
+
+@keyframes effect-pop {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.8);
+  }
+
+  45% {
+    opacity: 1;
+    transform: translateY(-12px) scale(1.25);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-28px) scale(0.7);
+  }
+}
+
+/* =========================================
+   OVERLAYS
+========================================= */
+
+.overlay-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.94));
+  text-align: center;
+  padding: 24px;
+}
+
+.overlay-panel.hidden {
+  display: none;
+}
+
+.overlay-panel h1,
+.overlay-panel h2 {
+  margin: 0 0 18px;
+  color: var(--nes-yellow);
+  font-size: clamp(32px, 6vw, 58px);
+  text-transform: uppercase;
+  text-shadow:
+    4px 4px 0 var(--nes-red-dark),
+    7px 7px 0 var(--nes-black);
+}
+
+.overlay-panel p {
+  margin: 7px 0;
+  font-size: clamp(16px, 3vw, 24px);
+}
+
+.main-instruction {
+  color: var(--nes-green-light);
+  font-weight: bold;
+}
+
+.blink {
+  margin-top: 18px;
+  color: var(--nes-cyan);
+  animation: blink 0.8s steps(2, end) infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
+
+#final-pot {
+  color: var(--nes-cyan);
+  font-size: clamp(24px, 5vw, 40px);
+  font-weight: bold;
+}
+
+#final-message {
+  color: var(--nes-yellow);
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#final-details {
+  margin: 8px 0 14px;
+  color: var(--nes-white);
+}
+
+#replay-button {
+  cursor: pointer;
+  padding: 12px 24px;
+  border: 4px solid var(--nes-white);
+  background: var(--nes-green);
+  color: var(--nes-white);
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 5px 5px 0 var(--nes-black);
+}
+
+#replay-button:hover {
+  background: var(--nes-green-light);
+}
+
+#replay-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 var(--nes-black);
+}
+
+/* =========================================
+   FOOTER MESSAGE
+========================================= */
+
+#game-message {
+  margin-top: 12px;
+  padding: 8px;
+  border: 3px solid var(--nes-gray);
+  background: var(--nes-black);
+  color: var(--nes-yellow);
+  text-align: center;
+  font-size: clamp(13px, 2.2vw, 18px);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 620px) {
+  :root {
+    --screen-height: 68vh;
+  }
+
+  #arcade-frame {
+    padding: 10px;
+    border-width: 4px;
+  }
+
+  #game-header {
+    grid-template-columns: 1fr;
+  }
+
+  .header-title {
+    order: -1;
+    text-align: center;
+  }
+
+  /*
+    Note:
+    If you keep the JS constants PLAYER_WIDTH = 72 and PLAYER_HEIGHT = 72,
+    I recommend keeping the CSS player size at 72px too.
+    Otherwise, the visual sprite and the JS collision/positioning values differ.
+  */
+  #player {
+    width: 72px;
+    height: 72px;
+  }
+
+  .invoice {
+    width: 46px;
+    height: 58px;
+  }
+
+  .cash {
+    width: 22px;
+    height: 30px;
+  }
+
+  #due-date-line {
+    bottom: 92px;
+  }
+}

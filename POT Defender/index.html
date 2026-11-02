@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>POT Defender</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main id="page">
+    <section id="arcade-frame">
+      <header id="game-header">
+        <div class="header-block">
+          <span class="label">POT</span>
+          <span id="pot-value">100%</span>
+        </div>
+
+        <div class="header-title">POT Defender</div>
+
+        <div class="header-block">
+          <span class="label">TIME</span>
+          <span id="time-value">30</span>
+        </div>
+      </header>
+
+      <section id="pot-bar-wrapper" aria-label="POT performance bar">
+        <div id="pot-bar">
+          <div id="pot-fill"></div>
+        </div>
+      </section>
+
+      <section id="stats">
+        <div>Paid: <span id="paid-value">0</span></div>
+        <div>Late: <span id="late-value">0</span></div>
+        <div>Total: <span id="total-value">0</span></div>
+      </section>
+
+      <section id="game-screen" aria-label="Game area">
+        <div id="crt-overlay"></div>
+
+        <div id="start-screen" class="overlay-panel">
+          <h1>POT Defender</h1>
+          <p class="main-instruction">Pay On Time the Invoices</p>
+          <p>Arrow keys to move</p>
+          <p>SPACE to shoot</p>
+          <p class="blink">Press SPACE to start</p>
+        </div>
+
+        <div id="game-over-screen" class="overlay-panel hidden">
+          <h2>Game Over</h2>
+          <p id="final-pot">Final POT: 100%</p>
+          <p id="final-message">Nice POT</p>
+          <div id="final-details">
+            <p>Paid invoices: <span id="final-paid">0</span></p>
+            <p>Late invoices: <span id="final-late">0</span></p>
+            <p>Total invoices: <span id="final-total">0</span></p>
+          </div>
+          <button id="replay-button" type="button">Play Again</button>
+        </div>
+
+        <div id="effects-layer"></div>
+        <div id="invoices-layer"></div>
+        <div id="cash-layer"></div>
+
+        <div id="due-date-line">
+          <span>Due Date</span>
+        </div>
+
+        <div id="player">
+          <img src="images/Bag.png" alt="Money bag player" />
+        </div>
+      </section>
+
+      <footer id="game-message">
+        Pay invoices before the Due Date.
+      </footer>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
