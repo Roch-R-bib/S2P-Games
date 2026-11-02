@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local Loop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main id="app">
+    <section id="game-frame">
+      <header id="top-bar">
+        <div class="hud-card">
+          <span class="hud-label">Time</span>
+          <span id="timer">60</span>
+        </div>
+
+        <div id="title-block">
+          <h1>Local Loop</h1>
+          <p>Sourcing Optimization</p>
+        </div>
+
+        <div class="hud-card">
+          <span class="hud-label">Score</span>
+          <span id="score">0 / 300</span>
+        </div>
+      </header>
+
+      <section id="progress-panel">
+        <div>
+          Optimized flows:
+          <span id="optimized-count">0</span>
+          /
+          <span id="total-flows">30</span>
+        </div>
+
+        <div id="selected-info">
+          Select a flow line to reallocate it.
+        </div>
+      </section>
+
+      <section id="map-wrapper">
+        <div id="world-map">
+          <img
+            id="world-map-image"
+            src="images/world-map.png"
+            alt="Stylized world map background"
+          />
+
+          <div class="map-grid"></div>
+
+          <div class="continent north-america">North America</div>
+          <div class="continent south-america">South America</div>
+          <div class="continent western-europe">Western Europe</div>
+          <div class="continent eastern-europe">Eastern Europe</div>
+          <div class="continent africa">AIM</div>
+          <div class="continent asia">Asia</div>
+          <div class="continent oceania">Oceania</div>
+
+          <svg
+            id="connections-svg"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-label="Sourcing flows"
+          ></svg>
+
+          <div id="nodes-layer"></div>
+
+          <div id="toast" class="hidden"></div>
+        </div>
+      </section>
+
+      <footer id="legend">
+        <div class="legend-title">Supplier types</div>
+
+        <div class="legend-item">
+          <span class="legend-square blue"></span>
+          Components
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-square red"></span>
+          Raw Materials
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-square green"></span>
+          Logistics
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-square yellow"></span>
+          Packaging
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-square purple"></span>
+          Services
+        </div>
+      </footer>
+    </section>
+
+    <section id="start-screen" class="overlay">
+      <div class="overlay-box">
+        <h2>Local Loop</h2>
+        <p class="subtitle">Sourcing Optimization</p>
+        <button id="start-button" type="button">Start</button>
+      </div>
+    </section>
+
+    <section id="tutorial-screen" class="overlay hidden">
+      <div class="overlay-box tutorial-box">
+        <h2>How to play</h2>
+
+        <p>
+          Connect each company <strong>(circle)</strong> to the
+          <strong>5 closest supplier types</strong>
+          <strong>(colored squares)</strong>.
+        </p>
+
+        <p>
+          Click a sourcing flow <strong>(line)</strong> that you think can be optimized,
+          then click a closer supplier of the <strong>same color</strong>.
+        </p>
+
+        <p>
+          A supplier can serve several companies if it is the closest source for them.
+        </p>
+
+        <p class="objective">
+          Optimize as many flows as possible before time runs out.
+        </p>
+
+        <button id="start-optimization-button" type="button">
+          Start Optimization
+        </button>
+      </div>
+    </section>
+
+    <section id="end-screen" class="overlay hidden">
+      <div class="overlay-box">
+        <h2 id="end-title">Well done!</h2>
+
+        <p id="end-result">
+          0 out of 30 sourcing flows are optimized.
+        </p>
+
+        <p id="end-score">
+          Final score: 0 / 300
+        </p>
+
+        <p id="end-message">
+          Keep optimizing.
+        </p>
+
+        <button id="play-again-button" type="button">Play Again</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
