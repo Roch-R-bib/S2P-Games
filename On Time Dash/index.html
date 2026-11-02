@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>On Time Dash</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell">
+    <section id="game-window">
+
+      <!-- TITLE SCREEN -->
+      <div id="title-screen" class="screen active">
+        <div class="title-scene">
+          <div class="pixel-sky"></div>
+          <div class="distant-factory">
+            <div class="factory-block"></div>
+            <div class="factory-chimney"></div>
+            <div class="factory-roof"></div>
+          </div>
+          <div class="title-road"></div>
+          <img src="images/truck.png" alt="Delivery truck" class="title-truck" />
+          <div class="title-box">
+            <h1>ON TIME DASH</h1>
+            <p class="subtitle">A race against the delivery deadline</p>
+            <p id="asset-status" class="small-info hidden"></p>
+            <p id="press-space" class="blink hidden">Press SPACE to start</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSTRUCTION SCREEN -->
+      <div id="instruction-screen" class="screen">
+        <div class="panel instruction-panel">
+          <h2 id="instruction-title">Step title</h2>
+          <p id="instruction-text">Step instruction</p>
+          <div class="key-hint">Press ENTER to start</div>
+        </div>
+      </div>
+
+      <!-- DRIVE SCREEN -->
+      <div id="drive-screen" class="screen">
+        <div class="hud">
+          <div class="timer-wrap">
+            <div id="timer-pie" class="timer-pie"></div>
+            <div id="timer-text" class="timer-text">80</div>
+          </div>
+          <div class="hud-info">
+            <div id="step-label">Course</div>
+            <div class="progress-outer">
+              <div id="progress-bar" class="progress-inner"></div>
+            </div>
+          </div>
+          <div class="score-box">
+            <span>Score</span>
+            <strong id="live-score">8000</strong>
+          </div>
+        </div>
+
+        <div id="road-area">
+          <div class="road-bg"></div>
+          <div class="lane lane-1"></div>
+          <div class="lane lane-2"></div>
+          <div class="lane lane-3"></div>
+          <div id="obstacle-layer"></div>
+          <img id="player-truck" src="images/truck.png" alt="Player truck" />
+        </div>
+      </div>
+
+      <!-- PRODUCTION 1 SCREEN -->
+      <div id="production1-screen" class="screen">
+        <div class="hud">
+          <div class="timer-wrap">
+            <div id="timer-pie-p1" class="timer-pie"></div>
+            <div id="timer-text-p1" class="timer-text">80</div>
+          </div>
+          <div class="hud-info">
+            <div>Production 1</div>
+            <div class="hud-subtitle">Respect the specification</div>
+          </div>
+          <div class="score-box">
+            <span>Score</span>
+            <strong id="live-score-p1">8000</strong>
+          </div>
+        </div>
+
+        <div class="factory-screen">
+          <div class="spec-card">
+            <h3>SPECIFICATION</h3>
+            <p>Button A: <strong id="spec-a">GREEN</strong></p>
+            <p>Button B: <strong id="spec-b">RED</strong></p>
+            <p>Button C: <strong id="spec-c">GREEN</strong></p>
+            <p>Lever: <strong id="spec-lever">UP</strong></p>
+            <p>Power: <strong id="spec-power">70</strong></p>
+          </div>
+
+          <div class="control-board">
+            <h3>MACHINE CONTROL</h3>
+
+            <div class="button-row">
+              <button id="btn-a" class="machine-btn green" data-control="a">A</button>
+              <button id="btn-b" class="machine-btn red" data-control="b">B</button>
+              <button id="btn-c" class="machine-btn green" data-control="c">C</button>
+            </div>
+
+            <div class="lever-zone">
+              <span>Lever</span>
+              <button id="lever-btn" class="lever up">UP</button>
+            </div>
+
+            <div class="power-zone">
+              <label for="power-slider">Power: <strong id="power-value">50</strong></label>
+              <input id="power-slider" type="range" min="0" max="100" value="50" />
+              <div class="scale">
+                <span>0</span>
+                <span>50</span>
+                <span>100</span>
+              </div>
+            </div>
+
+            <div id="prod1-feedback" class="feedback"></div>
+
+            <div class="factory-actions">
+              <button id="instruction-help" class="small-btn">Instructions</button>
+              <button id="prod1-ok" class="ok-btn">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTION 2 SCREEN -->
+      <div id="production2-screen" class="screen">
+        <div class="hud">
+          <div class="timer-wrap">
+            <div id="timer-pie-p2" class="timer-pie"></div>
+            <div id="timer-text-p2" class="timer-text">80</div>
+          </div>
+          <div class="hud-info">
+            <div>Production 2</div>
+            <div class="hud-subtitle">Enter the product codes</div>
+          </div>
+          <div class="score-box">
+            <span>Score</span>
+            <strong id="live-score-p2">8000</strong>
+          </div>
+        </div>
+
+        <div class="code-factory">
+          <h2>ENTER THE 6-CHARACTER PRODUCT CODES</h2>
+
+          <div id="package-list" class="package-list">
+            <!-- Filled by JavaScript -->
+          </div>
+
+          <div class="code-entry">
+            <label for="code-input">Code input</label>
+            <input id="code-input" type="text" maxlength="6" autocomplete="off" />
+            <p>Press ENTER to validate each code</p>
+            <div id="prod2-feedback" class="feedback"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULT SCREEN -->
+      <div id="result-screen" class="screen">
+        <div id="result-panel" class="panel result-panel">
+          <h2 id="result-title">Success!</h2>
+          <p id="result-message">On Time Delivery! Your client is satisfied.</p>
+          <p id="final-score-line">Score: 2000</p>
+          <div class="key-hint">Press SPACE to play again</div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
