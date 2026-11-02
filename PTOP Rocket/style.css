@@ -44,6 +44,74 @@ body {
 }
 
 /* ======================================
+   INSTRUCTIONS PANEL
+====================================== */
+
+#instructions-panel {
+  width: min(860px, 96vw);
+  margin: 0 auto 18px;
+  padding: 14px 18px;
+  border: 2px solid rgba(0, 212, 255, 0.55);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(6, 24, 51, 0.92), rgba(2, 13, 47, 0.88));
+  color: #ffffff;
+  box-shadow:
+    0 0 22px rgba(0, 212, 255, 0.18),
+    inset 0 0 22px rgba(255, 255, 255, 0.05);
+}
+
+.instruction-title {
+  margin-bottom: 8px;
+  color: #00d4ff;
+  font-size: clamp(15px, 2.2vw, 22px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.instruction-main {
+  margin-bottom: 6px;
+  color: #ffffff;
+  font-size: clamp(22px, 3.4vw, 34px);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.instruction-sub {
+  color: #b8efff;
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 600;
+}
+
+.key {
+  display: inline-block;
+  padding: 6px 16px;
+  margin: 0 5px;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  background: #ffd84d;
+  color: #07111f;
+  font-weight: 900;
+  box-shadow:
+    0 4px 0 #b88900,
+    0 0 14px rgba(255, 216, 77, 0.45);
+  animation: space-key-pulse 0.65s ease-in-out infinite alternate;
+}
+
+@keyframes space-key-pulse {
+  from {
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
+
+  to {
+    transform: translateY(2px) scale(1.04);
+    filter: brightness(1.25);
+  }
+}
+
+/* ======================================
    GAME WINDOW
 ====================================== */
 
@@ -320,6 +388,20 @@ body {
     gap: 12px;
     flex-direction: column;
     align-items: center;
+  }
+
+  #instructions-panel {
+    margin-bottom: 14px;
+    padding: 12px 14px;
+  }
+
+  .instruction-main {
+    line-height: 1.25;
+  }
+
+  .key {
+    padding: 5px 12px;
+    margin-top: 4px;
   }
 
   #game {
