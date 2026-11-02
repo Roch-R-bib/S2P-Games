@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CatMan - Category Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="tv-shell">
+    <header class="top-bar">
+      <div>
+        <div class="game-title">CatMan</div>
+        <div class="game-subtitle">Category Management</div>
+      </div>
+
+      <div class="top-hud">
+        <div id="timer">00:40</div>
+        <div id="scoreHud">Score: 0</div>
+      </div>
+    </header>
+
+    <main class="main-layout">
+      <aside class="info-panel">
+        <section class="info-card preview-card">
+          <div class="card-title">Incoming</div>
+
+          <div class="preview-track">
+            <div class="preview-slot">
+              <div class="preview-label">Following</div>
+              <canvas id="previewFollowing" width="120" height="120"></canvas>
+            </div>
+
+            <div class="preview-arrow">></div>
+
+            <div class="preview-slot">
+              <div class="preview-label">Next</div>
+              <canvas id="previewNext" width="120" height="120"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <section class="info-card score-card">
+          <div class="score-title">SCORE</div>
+          <div id="bigScore" class="big-score">0</div>
+
+          <div class="stats">
+            <div>OK: <span id="correctCount">0</span></div>
+            <div>Wrong: <span id="wrongCount">0</span></div>
+            <div>Missed: <span id="missedCount">0</span></div>
+          </div>
+        </section>
+
+        <section class="info-card cat-card">
+          <div class="card-title">CatMan</div>
+          <canvas id="catCanvas" width="240" height="260"></canvas>
+        </section>
+
+        <section class="info-card controls-card">
+          <div class="control-line"><span class="key">M</span> MFE</div>
+          <div class="control-line"><span class="key">R</span> RMAT</div>
+          <div class="control-line"><span class="key">S</span> SVC</div>
+          <div class="control-line"><span class="key">SPACE</span> Start</div>
+        </section>
+      </aside>
+
+      <section class="game-panel">
+        <div class="game-frame">
+          <canvas id="gameCanvas" width="720" height="960"></canvas>
+
+          <button id="btnMFE" class="glove-button glove-mfe" type="button" aria-label="MFE glove">
+            <img id="gloveMFE" src="images/mfefold.png" alt="MFE glove" />
+          </button>
+
+          <button id="btnRMAT" class="glove-button glove-rmat" type="button" aria-label="RMAT glove">
+            <img id="gloveRMAT" src="images/rmatfold.png" alt="RMAT glove" />
+          </button>
+
+          <button id="btnSVC" class="glove-button glove-svc" type="button" aria-label="SVC glove">
+            <img id="gloveSVC" src="images/svcfold.png" alt="SVC glove" />
+          </button>
+
+          <div id="missedBadge" class="missed-badge">MISSED</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="startOverlay" class="overlay visible">
+    <div class="overlay-panel">
+      <img class="overlay-cat" src="images/welcome.png" alt="CatMan welcome" />
+      <div class="overlay-title">CatMan</div>
+      <div class="overlay-subtitle">Category Management</div>
+
+      <p>
+        Classify Categories by pushing them into the right Domain Basket.
+      </p>
+
+      <div class="tutorial-box">
+        <div><span class="key">M</span> push to MFE</div>
+        <div><span class="key">R</span> push to RMAT</div>
+        <div><span class="key">S</span> push to SVC</div>
+        <div><span class="key">SPACE</span> start</div>
+      </div>
+
+      <button id="startButton" class="main-button" type="button">START</button>
+    </div>
+  </div>
+
+  <div id="endOverlay" class="overlay hidden">
+    <div class="overlay-panel">
+      <img id="endCat" class="overlay-cat" src="images/neutral.png" alt="CatMan result" />
+      <div id="endTitle" class="overlay-title">Result</div>
+      <div id="endScore" class="final-score">Score: 0</div>
+
+      <button id="playAgainButton" class="main-button" type="button">PLAY AGAIN</button>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
