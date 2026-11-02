@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SBM Rush</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <section id="homeScreen" class="screen active center-screen">
+    <div class="panel">
+      <h1>SBM RUSH</h1>
+      <p class="subtitle">Build smarter supplier hierarchies.</p>
+
+      <div class="instructions">
+        <p><strong>Goal:</strong> drag suppliers into rationalization containers.</p>
+        <p><strong>Rule:</strong> each container accepts only one supplier color.</p>
+        <p><strong>Hierarchy:</strong> complete <strong>GRP + SUB + SIT</strong>.</p>
+        <p><strong>Time:</strong> 60 seconds.</p>
+      </div>
+
+      <div class="legend">
+        <div>▲<br />GRP<br /><span>Triangle</span></div>
+        <div>■<br />SUB<br /><span>Square</span></div>
+        <div>●<br />SIT<br /><span>Circle</span></div>
+      </div>
+
+      <button id="playBtn">PLAY</button>
+    </div>
+  </section>
+
+  <section id="gameScreen" class="screen active">
+    <div class="game-wrapper">
+      <canvas id="gameCanvas" width="1200" height="720"></canvas>
+    </div>
+  </section>
+
+  <section id="resultScreen" class="screen center-screen">
+    <div class="panel">
+      <h1>RESULT</h1>
+
+      <p class="result-label">Final Score</p>
+      <p id="finalScore" class="big-score">0</p>
+
+      <p class="result-label">Rank</p>
+      <p id="finalRank" class="rank">Supplier Trainee</p>
+
+      <p>Complete Hierarchies: <strong id="finalComplete">0</strong></p>
+      <p>Suppliers Sorted: <strong id="finalSorted">0</strong></p>
+
+      <p class="message">
+        A strong supplier base is not about managing more suppliers.
+        It is about building complete and reliable hierarchies.
+      </p>
+
+      <button id="replayBtn">PLAY AGAIN</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
